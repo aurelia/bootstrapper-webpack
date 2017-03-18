@@ -50,7 +50,11 @@ function config(loader, appHost, configModuleId) {
   aurelia.configModuleId = configModuleId || null;
 
   if (configModuleId) {
-    return loader.loadModule(configModuleId).then(customConfig => customConfig.configure(aurelia));
+    return loader.loadModule(configModuleId).then(customConfig => {
+      if (customConfig.configure) {
+       return customConfig.configure(aurelia); 
+      }
+    });
   }
 
   aurelia.use
